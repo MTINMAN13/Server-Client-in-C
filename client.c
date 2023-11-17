@@ -19,6 +19,14 @@ void	send_signal(int pid, unsigned char octet)
 	}
 }
 
+void	ft_error(int num)
+{
+	if (num <= 2)
+		ft_printf("ERROR | You sent Insufficient number of parameters.\n");
+	if (num >= 4)
+		ft_printf("ERROR | Too many parameters!\n");
+}
+
 int	main(int argc, char **argv)
 {
 	int		pid;
@@ -27,8 +35,8 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 	{
-		ft_printf("ERROR | Insufficient parameters\n");
-		return (0);
+		ft_error(argc);
+		return (-1);
 	}
 	pid = ft_atoi(argv[1]);
 	str_send = argv[2];
@@ -38,6 +46,6 @@ int	main(int argc, char **argv)
 		send_signal(pid, (unsigned char)str_send[i]);
 		i++;
 	}
-	ft_printf("You have sent %d symbols\n", i);
+	ft_printf("CLIENT | You have sent %d symbols\n", i);
 	return (0);
 }

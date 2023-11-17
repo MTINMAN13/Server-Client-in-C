@@ -36,13 +36,23 @@ libft:
 clean:
 		@ $(RM) $(OBJ_S) $(OBJ_C)
 		@ $(RM) $(NAME_S) $(NAME_C)
-
+		@echo "$(RED2)               server wiped! have a nice day ;-)$(DEF_COLOR)"
+		@echo "$(RED)               please recompile to proceed.$(DEF_COLOR)"
+		@sleep 1
 
 fclean: clean
 		@ $(RM) $(NAME_S) $(NAME_C)
 		@ $(RM) libft.a
 		@ make -C libft/ clean
+		@clear
+		@echo "$(RED2)               all wiped boss! have a nice day ;-)$(DEF_COLOR)"
+		@sleep 1
+		@clear
 
 re: fclean all
 
-.PHONY: all libft clean fclean re
+norm:
+		@clear
+		@norminette server.c client.c minitalk.h
+
+.PHONY: all libft clean fclean re norm
