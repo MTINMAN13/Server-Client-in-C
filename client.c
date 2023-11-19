@@ -20,12 +20,13 @@ void	send_signal(int pid, unsigned char octet) {
 	ft_printf("\n");
 }
 
-void	ft_error(int num)
-{
+void ft_error(int num, char *thing) {
 	if (num <= 2)
-		ft_printf("ERROR | You sent Insufficient number of parameters.\n");
-	if (num >= 4)
+		ft_printf("ERROR | You sent an insufficient number of parameters.\n");
+	else if (num >= 4)
 		ft_printf("ERROR | Too many parameters!\n");
+	if (!(thing[0] > 47 && thing[0] < 58))
+		ft_printf("\n\nERROR | The provided PID parameter is not an integer. Pls... \n");
 }
 
 int	main(int argc, char **argv)
@@ -34,9 +35,9 @@ int	main(int argc, char **argv)
 	char	*str_send;
 	int		i;
 
-	if (argc != 3)
+	if (argc != 3 || !(argv[1][0] > 47 && argv[1][0] < 58))
 	{
-		ft_error(argc);
+		ft_error(argc, argv[1]);
 		return (-1);
 	}
 	pid = ft_atoi(argv[1]);
