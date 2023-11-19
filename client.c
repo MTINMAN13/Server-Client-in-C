@@ -1,22 +1,23 @@
 
 #include "minitalk.h"
+void	send_signal(int pid, unsigned char octet) {
+	int				i; // Start from the most significant bit
+	unsigned char	bit;
 
-void	send_signal(int pid, unsigned char octet)
-{
-	int				i;
-	unsigned char	octet_tmp;
-
-	octet_tmp = octet;
-	i = 8;
-	while (i-- > 0)
+	i = 7;
+	while (i >= 0)
 	{
-		octet_tmp = octet >> i;
-		if (octet_tmp % 2 == 0)
-			kill(pid, SIGUSR2);
-		else
+		bit = (octet >> i) & 1; // Extract the i-th bit
+		if (bit == 0)
 			kill(pid, SIGUSR1);
+		else
+			kill(pid, SIGUSR2);
 		usleep(100);
+		ft_printf("%i", bit);
+		// ft_printf("Currently sending %i\n", bit);
+		i--; // Move to the next bit
 	}
+	ft_printf("\n");
 }
 
 void	ft_error(int num)
@@ -46,6 +47,7 @@ int	main(int argc, char **argv)
 		send_signal(pid, (unsigned char)str_send[i]);
 		i++;
 	}
-	ft_printf("CLIENT | You have sent %d symbols\n", i);
+	send_signal(pid, '\n');
+	ft_printf("CLIENT | Sending %d symbols:\nCLIENT | %s", i, argv[2]);
 	return (0);
 }

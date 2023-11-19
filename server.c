@@ -1,47 +1,46 @@
 #include "minitalk.h"
 
-// void	handler(int sigsent)
-// {
-// 	static unsigned char	buff;
-// 	static int				i;
+volatile char			g_bit_buffer[7];
+volatile sig_atomic_t	g_bit_count = 0;
 
-// 	buff |= (sigsent == SIGUSR1);
-// 	i++;
-// 	if (i == 8)
-// 	{
-// 		ft_printf("%c", buff);
-// 		i = 0;
-// 		buff = 0;
-// 	}
-// 	else
-// 		buff <<= 1;
-// }
+void handler(int signal) {
+	int		decoded;
 
-void handler(int signum, siginfo_t *info, void *context)
-{
-	ucontext_t	*ucontext;
-
-	ucontext = (ucontext_t *)context;
-	ft_printf("Received signal %d from process ID %d\n", signum, info->si_pid);
-	ft_printf("ucontext_t address: %p\n", (void *)ucontext);
+	if (signal == SIGUSR1)
+		g_bit_buffer[g_bit_count] = '0';
+	else if (signal == SIGUSR2)
+		g_bit_buffer[g_bit_count] = '1';
+	g_bit_count++;
+	if (g_bit_count == 8)
+	{
+		decoded = ft_atoi_base((char *)g_bit_buffer, "01");
+		ft_strlcpy((char *)g_bit_buffer, "00000000", sizeof(g_bit_buffer));
+		ft_printf("%c", decoded);
+		g_bit_count = 0;
+	}
 }
 
-int main(void)
-{
-	struct sigaction sa;
+// 1. i want to take all the octets, pass them to ascii
+// 2. i want to print this shit
 
-	sa.sa_sigaction = handler;
-	sa.sa_flags = SA_SIGINFO;
+int main(void) {
+	struct sigaction	sa;
 
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
-
-	ft_printf("SERVER | %i\n(./server &)\n", getpid());
-	ft_printf(">SERVER ID IS: %i\n", getpid());
-
+	sa.sa_handler = handler;
+	sa.sa_flags = 0;
+	if (sigaction(SIGUSR1, &sa, NULL) == -1)
+	{
+		ft_printf("Error setting up SIGUSR1 handler");
+		exit(EXIT_FAILURE);
+	}
+	if (sigaction(SIGUSR2, &sa, NULL) == -1)
+	{
+		ft_printf("Error setting up SIGUSR2 handler");
+		exit(EXIT_FAILURE);
+	}
+	ft_printf("SERVER || %i || ONLINE\n\n", getpid());
 	while (1)
 		pause();
-
 	return 0;
 }
 
