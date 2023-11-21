@@ -1,10 +1,14 @@
 #include "minitalk.h"
 
-volatile char			g_bit_buffer[7];
+// instead add sigemptyset if bitcount is (8)
+// otherwise do sigaddset 1 or 0
+
 volatile sig_atomic_t	g_bit_count = 0;
 
-void handler(int signal) {
-	int		decoded;
+void handler(int signal)
+{
+	int						decoded;
+	volatile char			g_bit_buffer[7];
 
 	if (signal == SIGUSR1)
 		g_bit_buffer[g_bit_count] = '0';
@@ -22,8 +26,10 @@ void handler(int signal) {
 
 // 1. i want to take all the octets, pass them to ascii
 // 2. i want to print this shit
+// 3. I want to bulk up the code to handle the PID of sending client, to retrieve it and then send a text back to client.
 
-int main(void) {
+int main(void)
+{
 	struct sigaction	sa;
 
 	sa.sa_handler = handler;
@@ -45,10 +51,7 @@ int main(void) {
 }
 
 /*
-
-so i in this case want my server to continously run and correctly print out the signal
+so i in this case want my server to continously run and correctly prin out the signal
 when its received with the proper PID attached to it. I do have a separate client program
 already made. I also want the server to exit when i send "exit" into it
-
-
 */

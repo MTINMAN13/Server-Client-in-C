@@ -13,7 +13,7 @@ void	send_signal(int pid, unsigned char octet) {
 		else
 			kill(pid, SIGUSR2);
 		usleep(100);
-		ft_printf("%i", bit);
+		// ft_printf("%i", bit);
 		// ft_printf("Currently sending %i\n", bit);
 		i--; // Move to the next bit
 	}

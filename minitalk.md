@@ -1,10 +1,16 @@
 
 // You must create a communication program in the form of a client and a server.
 
+
+So understanding this task is all about understanding Process IDs and Signals, which are sent using the kill command.
+We can ONLY use SIGUSR1 and SIGUSR2.
+
 so we will use
 #include <signal.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+And (STATIC vs GLOBAL) so you really want to know static vars. are block only, global are for whole .c file.
 
 
 // ◦ write
