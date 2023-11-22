@@ -5,11 +5,14 @@
 
 volatile sig_atomic_t	g_bit_count = 0;
 
-void handler(int signal)
+void	handler(int signal, siginfo_t *info, void *context)
 {
-	int						decoded;
-	volatile char			g_bit_buffer[7];
+	int								decoded;
+	static volatile char			g_bit_buffer[7];
 
+
+	(void)info;
+	(void)context;
 	if (signal == SIGUSR1)
 		g_bit_buffer[g_bit_count] = '0';
 	else if (signal == SIGUSR2)
@@ -22,6 +25,7 @@ void handler(int signal)
 		ft_printf("%c", decoded);
 		g_bit_count = 0;
 	}
+	// handshake(info, 1);
 }
 
 // 1. i want to take all the octets, pass them to ascii
@@ -31,8 +35,9 @@ void handler(int signal)
 int main(void)
 {
 	struct sigaction	sa;
+	static char			*output;
 
-	sa.sa_handler = handler;
+	sa.sa_sigaction = handler;
 	sa.sa_flags = 0;
 	if (sigaction(SIGUSR1, &sa, NULL) == -1)
 	{
