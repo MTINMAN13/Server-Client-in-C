@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 21:24:18 by mman              #+#    #+#             */
-/*   Updated: 2023/11/23 14:50:23 by mman             ###   ########.fr       */
+/*   Updated: 2023/11/23 17:50:24 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,23 @@ void	ft_error(int num, char *thing)
 		ft_printf("\n\nERROR | Bad format.\n");
 }
 
+static void	handler(int signal, siginfo_t *info, void *context)
+{
+	(void)info;
+	(void)context;
+	if (signal == SIGUSR1)
+		ft_printf("Received signal from %i", info->si_pid);
+}
+
 int	main(int argc, char **argv)
 {
 	int		pid;
 	int		i;
 	char	*msg;
+	struct sigaction	sa;
 
+	sa.sa_sigaction = handler;
+	sa.sa_flags = 0;
 	if (argc != 3 || !(argv[1][0] > 47 && argv[1][0] < 58))
 	{
 		ft_error(argc, argv[1]);

@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:48:43 by mman              #+#    #+#             */
-/*   Updated: 2023/11/23 14:51:30 by mman             ###   ########.fr       */
+/*   Updated: 2023/11/23 17:50:02 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ void	handler(int signal, siginfo_t *info, void *context)
 		ft_strlcpy((char *)g_bit_buffer, "00000000", sizeof(g_bit_buffer));
 		ft_printf("%c", decoded);
 		g_bit_count = 0;
+		usleep(1);
 	}
+	if (g_bit_count == 0)
+		kill(info->si_pid, SIGUSR2);
 }
 
 int	main(void)
