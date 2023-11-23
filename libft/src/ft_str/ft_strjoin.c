@@ -6,11 +6,10 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 22:20:35 by apple             #+#    #+#             */
-/*   Updated: 2023/10/28 21:55:55 by mman             ###   ########.fr       */
+/*   Updated: 2023/11/20 21:24:06 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)

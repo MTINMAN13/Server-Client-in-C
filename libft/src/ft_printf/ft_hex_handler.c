@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_hex_handler.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/20 21:17:38 by mman              #+#    #+#             */
+/*   Updated: 2023/11/20 21:22:43 by mman             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 // goal of this is to convert integer to_hex to a Hexadecimal number
 // if the type is x it will do it with lowercase numbers
 // if the type is X it will do it with uppercase numbers
