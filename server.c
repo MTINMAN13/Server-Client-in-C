@@ -1,7 +1,16 @@
-#include "minitalk.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/23 14:48:43 by mman              #+#    #+#             */
+/*   Updated: 2023/11/23 17:50:02 by mman             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// instead add sigemptyset if bitcount is (8)
-// otherwise do sigaddset 1 or 0
+#include "minitalk.h"
 
 volatile sig_atomic_t	g_bit_count = 0;
 
@@ -9,7 +18,6 @@ void	handler(int signal, siginfo_t *info, void *context)
 {
 	int								decoded;
 	static volatile char			g_bit_buffer[7];
-
 
 	(void)info;
 	(void)context;
@@ -24,18 +32,15 @@ void	handler(int signal, siginfo_t *info, void *context)
 		ft_strlcpy((char *)g_bit_buffer, "00000000", sizeof(g_bit_buffer));
 		ft_printf("%c", decoded);
 		g_bit_count = 0;
+		usleep(1);
 	}
-	// handshake(info, 1);
+	if (g_bit_count == 0)
+		kill(info->si_pid, SIGUSR2);
 }
 
-// 1. i want to take all the octets, pass them to ascii
-// 2. i want to print this shit
-// 3. I want to bulk up the code to handle the PID of sending client, to retrieve it and then send a text back to client.
-
-int main(void)
+int	main(void)
 {
 	struct sigaction	sa;
-	static char			*output;
 
 	sa.sa_sigaction = handler;
 	sa.sa_flags = 0;
@@ -52,11 +57,5 @@ int main(void)
 	ft_printf("SERVER || %i || ONLINE\n\n", getpid());
 	while (1)
 		pause();
-	return 0;
+	return (0);
 }
-
-/*
-so i in this case want my server to continously run and correctly prin out the signal
-when its received with the proper PID attached to it. I do have a separate client program
-already made. I also want the server to exit when i send "exit" into it
-*/

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi_base.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/20 21:08:04 by mman              #+#    #+#             */
+/*   Updated: 2023/11/20 21:17:15 by mman             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 static int	get_base_length(char *base)
 {
 	int	base_length;
@@ -29,16 +41,16 @@ static int	check_errors(char *str, char *base)
 	int	start;
 
 	start = 0;
-	while (str[start] != '\0' && (str[start] == ' ' || str[start] == '\t' ||
-		str[start] == '\r' || str[start] == '\n' || str[start] == '\v' ||
-		str[start] == '\f'))
+	while (str[start] != '\0' && (str[start] == ' ' || str[start] == '\t'
+			|| str[start] == '\r' || str[start] == '\n'
+			|| str[start] == '\v' || str[start] == '\f'))
 		start++;
 	i = start;
 	while (str[i])
 	{
 		j = 0;
-		while (base[j] && (str[i] != base[j] ||
-				(str[i] == '-' || str[i] == '+')))
+		while (base[j] && (str[i] != base[j]
+				|| (str[i] == '-' || str[i] == '+')))
 			++j;
 		if (str[i] != base[j] && str[i] != '-' && str[i] != '+')
 			return (0);
@@ -59,6 +71,16 @@ static int	get_nb(char c, char *base)
 	return (i);
 }
 
+static int	ft_checker(char str)
+{
+	if (str != '\0' && (str == ' ' || str == '\t'
+			|| str == '\r' || str == '\n' || str == '\v'
+			|| str == '\f'))
+		return (0);
+	else
+		return (1);
+}
+
 int	ft_atoi_base(char *str, char *base)
 {
 	int	s;
@@ -67,17 +89,17 @@ int	ft_atoi_base(char *str, char *base)
 	int	negative;
 	int	base_length;
 
-	if (!(base_length = get_base_length(base)) || !check_errors(str, base))
+	base_length = get_base_length(base);
+	if (!check_errors(str, base))
 		return (0);
 	s = 0;
-	while (str[s] != '\0' && (str[s] == ' ' || str[s] == '\t' || str[s] == '\r'
-			|| str[s] == '\n' || str[s] == '\v' || str[s] == '\f'))
+	while (ft_checker(str[s]))
 		s++;
 	i = s - 1;
 	res = 0;
 	negative = 1;
-	while (str[++i] && (((str[i] == '-' || str[i] == '+') && i == s) ||
-			(str[i] != '-' && str[i] != '+')))
+	while (str[++i] && (((str[i] == '-' || str[i] == '+') && i == s)
+			|| (str[i] != '-' && str[i] != '+')))
 	{
 		if (str[i] == '-')
 			negative = -1;

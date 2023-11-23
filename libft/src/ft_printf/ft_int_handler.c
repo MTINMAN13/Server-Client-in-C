@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_int_handler.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/20 21:17:42 by mman              #+#    #+#             */
+/*   Updated: 2023/11/20 21:23:04 by mman             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-unsigned long long	ft_numlen(long n, int base)
+long long	ft_numlen(long n, int base)
 {
 	unsigned long long	count;
 
@@ -23,7 +35,7 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
-void	ft_print_u(unsigned int n)
+void	ft_print_u(long n)
 {
 	unsigned int			len;
 	char					*ret;

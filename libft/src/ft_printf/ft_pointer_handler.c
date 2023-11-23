@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pointer_handler.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/20 21:17:45 by mman              #+#    #+#             */
+/*   Updated: 2023/11/20 21:17:46 by mman             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 // the function returns the amount of printed characters
 // the function prints the pointer to passed argument
 
