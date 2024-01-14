@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:48:43 by mman              #+#    #+#             */
-/*   Updated: 2023/11/23 14:51:30 by mman             ###   ########.fr       */
+/*   Updated: 2024/01/14 21:21:16 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,39 @@
 
 volatile sig_atomic_t	g_bit_count = 0;
 
+int	ft_convert(volatile char *binaryString)
+{
+	int	result;
+
+	result = 0;
+	while (*binaryString)
+	{
+		result = (result << 1) + (*binaryString - '0');
+		binaryString++;
+	}
+
+	return (result);
+}
+
 void	handler(int signal, siginfo_t *info, void *context)
 {
-	int								decoded;
-	static volatile char			g_bit_buffer[7];
+	static volatile char			bit_stash[7];
 
 	(void)info;
 	(void)context;
 	if (signal == SIGUSR1)
-		g_bit_buffer[g_bit_count] = '0';
+	{
+		bit_stash[g_bit_count] = '0';
+	}
 	else if (signal == SIGUSR2)
-		g_bit_buffer[g_bit_count] = '1';
+	{
+		bit_stash[g_bit_count] = '1';
+	}
 	g_bit_count++;
 	if (g_bit_count == 8)
 	{
-		decoded = ft_atoi_base((char *)g_bit_buffer, "01");
-		ft_strlcpy((char *)g_bit_buffer, "00000000", sizeof(g_bit_buffer));
-		ft_printf("%c", decoded);
+		ft_printf("%c",ft_convert(bit_stash));
+		ft_bzero((char *)bit_stash, 8);
 		g_bit_count = 0;
 	}
 }

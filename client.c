@@ -6,7 +6,7 @@
 /*   By: mman <mman@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 21:24:18 by mman              #+#    #+#             */
-/*   Updated: 2023/11/23 14:50:23 by mman             ###   ########.fr       */
+/*   Updated: 2024/01/14 21:21:02 by mman             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 // AND SEND IT AT THE BEGINNING OF THIS TRANSMISSION
 // THEN AFTER THE TRANSMISSION IS RECEIVED IN FULL< I WILL
 // SEND BACK THE HANDSHAKE
+
+// Eliminate - PLAY!
 
 #include "minitalk.h"
 
@@ -27,9 +29,15 @@ void	send_signal(int pid, unsigned char octet)
 	{
 		bit = (octet >> i) & 1;
 		if (bit == 0)
+		{
+			ft_printf("sending a zero\n");
 			kill(pid, SIGUSR1);
+		}
 		else
+		{
+			ft_printf("sending a one\n");
 			kill(pid, SIGUSR2);
+		}
 		usleep(100);
 		i--;
 	}
